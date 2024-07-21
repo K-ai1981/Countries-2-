@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrant Country and Capital Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-out;
+        }
+        .question {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .question:hover {
+            transform: translateY(-5px);
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        label:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        #results {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Vibrant Country and Capital Quiz</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Quiz</button>
+    <div id="results"></div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Berlin", "Paris", "Madrid"],
+                correct: 2
+            },
+            {
+                question: "Which country has Tokyo as its capital?",
+                options: ["China", "South Korea", "Thailand", "Japan"],
+                correct: 3
+            },
+            {
+                question: "What is the capital of Australia?",
+                options: ["Sydney", "Melbourne", "Canberra", "Perth"],
+                correct: 2
+            },
+            {
+                question: "Which country has Ottawa as its capital?",
+                options: ["USA", "Canada", "Mexico", "Brazil"],
+                correct: 1
+            },
+            {
+                question: "What is the capital of Egypt?",
+                options: ["Alexandria", "Cairo", "Luxor", "Giza"],
+                correct: 1
+            },
+            {
+                question: "Which country has Moscow as its capital?",
+                options: ["Poland", "Ukraine", "Belarus", "Russia"],
+                correct: 3
+            },
+            {
+                question: "What is the capital of Brazil?",
+                options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+                correct: 2
+            },
+            {
+                question: "Which country has New Delhi as its capital?",
+                options: ["Pakistan", "Bangladesh", "India", "Nepal"],
+                correct: 2
+            },
+            {
+                question: "What is the capital of South Africa?",
+                options: ["Cape Town", "Johannesburg", "Durban", "Pretoria"],
+                correct: 3
+            },
+            {
+                question: "Which country has Beijing as its capital?",
+                options: ["Japan", "South Korea", "China", "Vietnam"],
+                correct: 2
+            }
+        ];
+
+        function buildQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizData.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${question.question}</p>
+                    ${question.options.map((option, i) => `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${option}
+                        </label>
+                    `).join('')}
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function showResults() {
+            const resultsContainer = document.getElementById('results');
+            let score = 0;
+            quizData.forEach((question, index) => {
+                const selector = `input[name="question${index}"]:checked`;
+                const userAnswer = (document.querySelector(selector) || {}).value;
+                if (userAnswer == question.correct) {
+                    score++;
+                }
+            });
+            resultsContainer.innerHTML = `You scored ${score} out of ${quizData.length}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+        document.getElementById('submit').addEventListener('click', showResults);
+    </script>
+</body>
+</html>
